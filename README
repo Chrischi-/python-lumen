@@ -1,0 +1,14 @@
+
+Some very simple python code to control a Tabu Lumen RGB strip.
+It uses bluez gatttool so it only works on Linux (as far as I know).
+It works on x86, Raspberry Pi, and NTC CHIP running a Debian Jessie based OS.
+
+lumen.py is a command line tool
+lumen-rest.py exposes it as a REST service using Flask
+lumen-rest-zeroconf.py adds a zeroconf service advertisement
+
+Credit to:
+https://github.com/mrquincle/luminosi
+https://github.com/sandeepmistry/node-lumen
+
+

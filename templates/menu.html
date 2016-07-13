@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>{{ status }}</h1>
+    <p>{{ message }}
+    <p>
+    <table>
+      {% for i in items %}
+      <tr>
+        <td width="100"><a href="{{ url_for( 'lumen', m=i|lower, **info[i].OPTS|default({}) ) }}">{{ i|lower }}</a></td>
+        <td>{{ info[i].DESC|safe }}</td>
+      </tr>
+      {%- endfor %}
+    </table>
+{% endblock %}
