@@ -122,6 +122,7 @@ con.expect('\[LE\]>')
 con.sendline(cmd)
 con.expect('\[LE\]>')
 con.sendline('disconnect')
+con.expect('\[LE\]>')
+con.sendline('exit')
 con.close()
-
 

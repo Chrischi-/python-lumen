@@ -109,6 +109,8 @@ def encrypt(command):
   return data
 
 @app.route('/')
+@app.route('/lumen')
+@app.route('/lumen/')
 def menu():
   return redirect('/lumen/menu')
 
@@ -179,6 +181,8 @@ def lumen(m):
   con.sendline(cmd)
   con.expect('\[LE\]>')
   con.sendline('disconnect')
+  con.expect('\[LE\]>')
+  con.sendline('exit')
   con.close()
 
   message = 'Success'
