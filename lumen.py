@@ -42,12 +42,39 @@ def encrypt(command):
   data[0] = 0x01 & command[0]
   return data
 
-#for mode in MODES:
-#  cmd = COMMAND[mode]
-#  enc = encrypt(cmd)
-#  c = binascii.hexlify(struct.pack('B'*len(enc), *enc))
-#  print mode
-#  print 'char-write-cmd 25 {}'.format(c)
+def sendcmd(interface,address,mode,values):
+  # interface = string of interface, ie: 'hci0'
+  # address = string of mac address, ie: 'D0:39:72:E8:98:1F'
+  # mode = string of mode name, ie: 'WHITE'
+  # value = optional parameters for colors
+
+  # print command
+  print mode, values
+  cmd = COMMAND[mode] + values
+  enc = encrypt(cmd)
+  hex = binascii.hexlify(struct.pack('B'*len(enc), *enc))
+  cmd = 'char-write-cmd 25 {}'.format(hex)
+
+  # execute with gatttool
+  con = pexpect.spawn('gatttool -I -i ' + interface + ' -b ' + address)
+  con.expect('\[LE\]>')
+  con.sendline('connect')
+  con.expect('successful')
+  con.sendline('char-write-cmd 25 08610766a7680f5a183e5e7a3e3cbeaa8a214b6b')
+  con.expect('\[LE\]>')
+  con.sendline('char-read-hnd 28')
+  con.expect('\[LE\]>')
+  con.sendline('char-write-cmd 25 07dfd99bfddd545a183e5e7a3e3cbeaa8a214b6b')
+  con.expect('\[LE\]>')
+  con.sendline('char-read-hnd 28')
+  con.expect('\[LE\]>')
+  con.sendline(cmd)
+  con.expect('\[LE\]>')
+  con.sendline('disconnect')
+  con.expect('\[LE\]>')
+  con.sendline('exit')
+  con.close()
+
 
 interface = 'hci0'
 address = 'D0:39:72:E8:98:1F'
@@ -99,30 +126,5 @@ for i,v in enumerate(values):
     print "Error: values are integers in range 0-99"
     sys.exit(1)
 
-print mode, values
-cmd = COMMAND[mode] + values
-print cmd
-enc = encrypt(cmd)
-hex = binascii.hexlify(struct.pack('B'*len(enc), *enc))
-print hex
-cmd = 'char-write-cmd 25 {}'.format(hex)
-
-con = pexpect.spawn('gatttool -I -i ' + interface + ' -b ' + address)
-con.expect('\[LE\]>')
-con.sendline('connect')
-con.expect('successful')
-con.sendline('char-write-cmd 25 08610766a7680f5a183e5e7a3e3cbeaa8a214b6b')
-con.expect('\[LE\]>')
-con.sendline('char-read-hnd 28')
-con.expect('\[LE\]>')
-con.sendline('char-write-cmd 25 07dfd99bfddd545a183e5e7a3e3cbeaa8a214b6b')
-con.expect('\[LE\]>')
-con.sendline('char-read-hnd 28')
-con.expect('\[LE\]>')
-con.sendline(cmd)
-con.expect('\[LE\]>')
-con.sendline('disconnect')
-con.expect('\[LE\]>')
-con.sendline('exit')
-con.close()
+sendcmd(interface,address,mode,values)
 
