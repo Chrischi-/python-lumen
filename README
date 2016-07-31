@@ -1,24 +1,25 @@
 
 Some very simple python code to control a Tabu Lumen RGB strip.
 It uses bluez gatttool so it only works on Linux (as far as I know).
-It works on x86, Raspberry Pi, and NTC CHIP running a Debian Jessie based OS.
+It works on x86, Raspberry Pi, and NTC CHIP all unning a Debian Jessie based OS.
 
-lumen.py is a command line tool
-lumen-rest.py exposes it as a REST service using Flask
-lumen-rest-zeroconf.py adds a zeroconf service advertisement
-
-To use
-Requires a manual connection made first with hcitool:
-sudo hcitool lescann
+You must first initiate a manual connection with hcitool:
+sudo hcitool lescan
 sudo hcitool lecc <MAC>
 
-replace MAC in source for rest version
-command line uses getopt
+lumen.py is a command line tool
+You can supply interface and address on the command line
+
+lumen-mqtt.py uses the python paho client to subscribe to a topic and processes the messages
+You can supply interface and address on the command line
+
+lumen-rest.py exposes a REST service using Flask
+lumen-rest-zeroconf.py adds a zeroconf service advertisement
+Replace interface and address in source for rests version
 
 
 Todo;
 - update source to use bluepy to avoid the manual connection and remove the need to supply the MAC address 
-- add an mqtt client version?
 
 
 Credit to:
