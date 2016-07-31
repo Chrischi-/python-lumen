@@ -7,6 +7,20 @@ lumen.py is a command line tool
 lumen-rest.py exposes it as a REST service using Flask
 lumen-rest-zeroconf.py adds a zeroconf service advertisement
 
+To use
+Requires a manual connection made first with hcitool:
+sudo hcitool lescann
+sudo hcitool lecc <MAC>
+
+replace MAC in source for rest version
+command line uses getopt
+
+
+Todo;
+- update source to use bluepy to avoid the manual connection and remove the need to supply the MAC address 
+- add an mqtt client version?
+
+
 Credit to:
 https://github.com/mrquincle/luminosi
 https://github.com/sandeepmistry/node-lumen
