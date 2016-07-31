@@ -12,10 +12,12 @@ You can supply interface and address on the command line
 
 lumen-mqtt.py uses the python paho client to subscribe to a topic and processes the messages
 You can supply interface and address on the command line
+Replace TOPIC, BROKER, and PORT in the source
+It is based off the example paho mqtt client subscriber code
 
 lumen-rest.py exposes a REST service using Flask
 lumen-rest-zeroconf.py adds a zeroconf service advertisement
-Replace interface and address in source for rests version
+Replace interface and address in source
 
 
 Todo;
