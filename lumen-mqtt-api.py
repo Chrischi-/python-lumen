@@ -210,7 +210,7 @@ def on_message(client, userdata, msg):
 
     # RGB sends RGB(R,G,B)
     elif p[0:4] == 'RGB(':
-      colors = p[5:]
+      colors = p[4:]
       colors = colors.strip(')')
       params.extend(rgb2scale([int(i) for i in colors.split(',')]))
 
